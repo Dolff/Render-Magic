@@ -48,6 +48,7 @@ Object::Object() {
 	scaleX = scaleY = scaleZ = 1;
 	rotateX = rotateY = rotateZ = 0;
 	thisObj = CUBE;
+	R = G = B = 1;
 }
 
 void Object::translate(float dx, float dy, float dz) {
@@ -75,10 +76,10 @@ void Object::render() {
 		glTranslatef(x,y,z);
 		glScalef(scaleX,scaleY,scaleZ);
 		glRotatef(rotateAngle, rotateX, rotateY, rotateZ);
-		GLUquadricObj *myQuad = gluNewQuadric();
+		//GLUquadricObj *myQuad = gluNewQuadric();
 		switch(thisObj) {
 			case CUBE:
-				glutSolidCube( 1 );
+				glutSolidCube( 2 );
 				break;
 		}
 	}; glPopMatrix();

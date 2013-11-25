@@ -32,6 +32,8 @@ float camTheta, camPhi, camRadius;
 //cartesian coords
 float camX, camY, camZ;
 
+Object cube;
+
 //draws a grid in the X-Z plane to help give the user perspective
 void drawGrid() {
     glDisable(GL_LIGHTING);
@@ -51,6 +53,13 @@ void drawGrid() {
     }; glEnd();
 
     glEnable(GL_LIGHTING);
+}
+
+void findCameraPos(float theta, float phi, float radius,
+                            float &x, float &y, float &z) {
+    x = radius * sinf(theta)*sinf(phi);
+    y = radius * -cosf(phi);
+    z = radius * -cosf(theta)*sinf(phi);
 }
 
 //basic function to resize the display if the window size is changed
@@ -73,7 +82,13 @@ void render(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+    gluLookAt(camX, camY, camZ,     //camera is located at (x,y,z)
+            0.0f, 0.0f, 0.0f,                           //camera is looking at (0,0,0)
+            0.0f, 1.0f, 0.0f); 
 
+	cube.render();
+	drawGrid();
 
 	glutSwapBuffers();
 }
@@ -113,6 +128,9 @@ int main(int argc, char **argv) {
     camRadius = 12.0f;
     camTheta = 2.80;
     camPhi = 2.0;
+    
+    findCameraPos(camTheta, camPhi, camRadius,
+						   camX, camY, camZ);
 
     glutDisplayFunc(render);
     glutReshapeFunc(resizeWindow);
