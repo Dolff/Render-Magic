@@ -69,14 +69,37 @@ void resizeWindow(int w, int h) {
     gluPerspective(45.0,aspectRatio,0.1,100000);
 }
 
-void render() {
+void render(void) {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+	glutSwapBuffers();
 }
+
+void initScene()
+        {glEnable(GL_DEPTH_TEST);
+
+        //turns the lights on
+         float lightCol[4] = { 1, 1, 1, 1};
+         float ambientCol[4] = {0.0, 0.0, 0.0, 1.0};
+         float lPosition[4] = { 10, 10, 10, 1 };
+         glLightfv(GL_LIGHT0,GL_POSITION,lPosition);
+         glLightfv(GL_LIGHT0,GL_DIFFUSE,lightCol);
+         glLightfv(GL_LIGHT0, GL_AMBIENT, ambientCol);
+         glEnable(GL_LIGHTING);
+         glEnable(GL_LIGHT0);
+
+         glEnable(GL_COLOR_MATERIAL);
+         glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+
+         glShadeModel(GL_SMOOTH);
+        }
 
 //default timer
 void myTimer(int value) {
     glutPostRedisplay();
-
     glutTimerFunc((unsigned int)(1000.0 / 60.0), myTimer, 0);
 }
 
@@ -91,6 +114,10 @@ int main(int argc, char **argv) {
     camTheta = 2.80;
     camPhi = 2.0;
 
+    glutDisplayFunc(render);
+    glutReshapeFunc(resizeWindow);
+
+    initScene();
     glutTimerFunc((unsigned int)(1000.0 / 60.0), myTimer, 0);
 
     glutMainLoop();
