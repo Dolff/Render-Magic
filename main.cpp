@@ -133,12 +133,24 @@ void ArrowKeys(int key, int x, int y) {
 }
 
 void keyboard(unsigned char key, int x, int y) {
-	if((key=='q')||(key == 0x1b))
+	if((key == 0x1b))
 		{exit(0);}
 	if(key == '.')
 		{cube.translate(0,-1,0);}
 	if(key == '/')
 		{cube.translate(0,1,0);}
+	if(key == 'w')
+		{cube.scale(.1,0,0);}
+	if(key == 'q')
+		{cube.scale(-.1,0,0);}
+	if(key == 's')
+		{cube.scale(0,.1,0);}
+	if(key == 'a')
+		{cube.scale(0,-.1,0);}
+	if(key == 'x')
+		{cube.scale(0,0,.1);}
+	if(key == 'z')
+		{cube.scale(0,0,-.1);}
 }
 
 int main(int argc, char **argv) {

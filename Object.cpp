@@ -58,9 +58,9 @@ void Object::translate(float dx, float dy, float dz) {
 }
 
 void Object::scale(float dx, float dy, float dz) {
-	scaleX+=dx;
-	scaleY+=dy;
-	scaleZ+=dz;
+	if(scaleX > .1 || dx>0) scaleX+=dx;
+	if(scaleY > .1 || dy>0) scaleY+=dy;
+	if(scaleZ > .1 || dz>0) scaleZ+=dz;
 }
 
 void Object::rotate(float angle, float vX, float vY, float vZ) {
