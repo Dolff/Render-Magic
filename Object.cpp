@@ -29,10 +29,11 @@ enum OBJ_TYPE {
 
 class Object {
 	public:
-		render();
-		translate(float,float,float);
-		scale(float,float,float);
-		rotate(float,float,float);	
+		Object();
+		void render();
+		void translate(float,float,float);
+		void scale(float,float,float);
+		void rotate(float,float,float,float);	
 	private:
 		float x,y,z;
 		float scaleX, scaleY, scaleZ;
@@ -49,26 +50,26 @@ Object::Object() {
 	thisObj = CUBE;
 }
 
-Object::translate(float dx, float dy, float dz) {
+void Object::translate(float dx, float dy, float dz) {
 	x+=dx;
 	y+=dy;
 	z+=dz;
 }
 
-Object::scale(float dx, float dy, float dz) {
+void Object::scale(float dx, float dy, float dz) {
 	scaleX+=dx;
 	scaleY+=dy;
 	scaleZ+=dz;
 }
 
-Object::rotate(float angle, float vX, float vY, float vZ) {
+void Object::rotate(float angle, float vX, float vY, float vZ) {
 	rotateX = vX;
 	rotateY = vY;
 	rotateZ = vZ;
 	rotateAngle = angle;
 }
 
-Object::render() {
+void Object::render() {
 	glPushMatrix(); {
 		glColor3f(R,G,B);
 		glTranslatef(x,y,z);
