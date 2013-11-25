@@ -139,6 +139,8 @@ void keyboard(unsigned char key, int x, int y) {
 		{cube.translate(0,-1,0);}
 	if(key == '/')
 		{cube.translate(0,1,0);}
+		
+	//handle scaling	
 	if(key == 'w')
 		{cube.scale(.1,0,0);}
 	if(key == 'q')
@@ -151,6 +153,18 @@ void keyboard(unsigned char key, int x, int y) {
 		{cube.scale(0,0,.1);}
 	if(key == 'z')
 		{cube.scale(0,0,-.1);}
+	
+	//handle rotation	
+	if(key == 'c')
+		{cube.rotateAxis = 0;}
+	if(key == 'v')
+		{cube.rotateAxis = 1;}
+	if(key == 'b')
+		{cube.rotateAxis = 2;}
+	if(key == 'n')
+		{cube.rotate(0.5);}
+	if(key == 'm')
+		{cube.rotate(-0.5);}
 }
 
 int main(int argc, char **argv) {

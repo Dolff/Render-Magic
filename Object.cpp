@@ -33,11 +33,12 @@ class Object {
 		void render();
 		void translate(float,float,float);
 		void scale(float,float,float);
-		void rotate(float,float,float,float);	
+		void rotate(float);
+		float rotateAxis;		
 	private:
 		float x,y,z;
 		float scaleX, scaleY, scaleZ;
-		float rotateX, rotateY, rotateZ, rotateAngle;
+		float rotateX, rotateY, rotateZ;
 		float R, G, B;
 		OBJ_TYPE thisObj;
 
@@ -63,19 +64,21 @@ void Object::scale(float dx, float dy, float dz) {
 	if(scaleZ > .1 || dz>0) scaleZ+=dz;
 }
 
-void Object::rotate(float angle, float vX, float vY, float vZ) {
-	rotateX = vX;
-	rotateY = vY;
-	rotateZ = vZ;
-	rotateAngle = angle;
+void Object::rotate(float angle) {
+	if (rotateAxis == 0) rotateX += angle;
+	if (rotateAxis == 1) rotateY += angle;
+	if (rotateAxis == 2) rotateZ += angle;
 }
 
 void Object::render() {
 	glPushMatrix(); {
 		glColor3f(R,G,B);
 		glTranslatef(x,y,z);
+		glRotatef(rotateX, 1, 0, 0);
+		glRotatef(rotateY, 0, 1, 0);
+		glRotatef(rotateZ, 0, 0, 1);
 		glScalef(scaleX,scaleY,scaleZ);
-		glRotatef(rotateAngle, rotateX, rotateY, rotateZ);
+		
 		//GLUquadricObj *myQuad = gluNewQuadric();
 		switch(thisObj) {
 			case CUBE:
