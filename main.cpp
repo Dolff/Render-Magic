@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <Object.cpp>
+#include "Object.cpp"
 
 using namespace std;
 
@@ -87,11 +87,9 @@ int main(int argc, char **argv) {
     glutInitWindowSize(windowWidth,windowHeight);
     glutCreateWindow("Render Magic");
 
-    cameraRadius = 12.0f;
-    cameraTheta = 2.80;
-    cameraPhi = 2.0;
-
-    objX = objY = objZ = 0.0f;
+    camRadius = 12.0f;
+    camTheta = 2.80;
+    camPhi = 2.0;
 
     glutTimerFunc((unsigned int)(1000.0 / 60.0), myTimer, 0);
 
