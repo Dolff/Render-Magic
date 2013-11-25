@@ -118,6 +118,29 @@ void myTimer(int value) {
     glutTimerFunc((unsigned int)(1000.0 / 60.0), myTimer, 0);
 }
 
+void ArrowKeys(int key, int x, int y) {
+	switch(key)
+	{
+	case GLUT_KEY_RIGHT:
+		cube.translate(1,0,0); break;
+	case GLUT_KEY_LEFT:
+		cube.translate(-1,0,0); break;
+	case GLUT_KEY_UP:
+		cube.translate(0,0,1); break;
+	case GLUT_KEY_DOWN:
+		cube.translate(0,0,-1); break;
+	}
+}
+
+void keyboard(unsigned char key, int x, int y) {
+	if((key=='q')||(key == 0x1b))
+		{exit(0);}
+	if(key == '.')
+		{cube.translate(0,-1,0);}
+	if(key == '/')
+		{cube.translate(0,1,0);}
+}
+
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -131,7 +154,8 @@ int main(int argc, char **argv) {
     
     findCameraPos(camTheta, camPhi, camRadius,
 						   camX, camY, camZ);
-
+    glutKeyboardFunc(keyboard);
+    glutSpecialFunc(ArrowKeys);
     glutDisplayFunc(render);
     glutReshapeFunc(resizeWindow);
 
