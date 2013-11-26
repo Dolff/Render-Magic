@@ -183,6 +183,24 @@ void keyboard(unsigned char key, int x, int y) {
 			objList.push_back(newObj);
 			currentObj=objList.size()-1;
 		}
+	} else if (key == '2') {
+		if (selection) currentObj = 1;		
+	} else if (key == '3') {
+		if (selection) currentObj = 2;	
+	} else if (key == '4') {
+		if (selection) currentObj = 3;	
+	} else if (key == '5') {
+		if (selection) currentObj = 4;	
+	} else if (key == '6') {
+		if (selection) currentObj = 5;
+	} else if (key == '7') {
+		if (selection) currentObj = 6;	
+	} else if (key == '8') {
+		if (selection) currentObj = 7;	
+	} else if (key == '9') {
+		if (selection) currentObj = 8;	
+	} else if (key == '0') {
+		if (selection) currentObj = 9;	
 	}
 }
 
