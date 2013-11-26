@@ -15,13 +15,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <vector>
 #include "Object.cpp"
 
 using namespace std;
 
 //--Global Variables--
-int windowWidth = 512;
-int windowHeight = 512;
+int windowWidth = 768;
+int windowHeight = 768;
 //status of the mouse buttons
 GLint leftMouseButton = GLUT_UP, rightMouseButton = GLUT_UP;
 int mouseX = 0;
@@ -32,7 +33,9 @@ float camTheta, camPhi, camRadius;
 //cartesian coords
 float camX, camY, camZ;
 
+unsigned int currentObj = 0;
 Object cube;
+vector<Object*> objList;
 
 //draws a grid in the X-Z plane to help give the user perspective
 void drawGrid() {
@@ -87,7 +90,10 @@ void render(void) {
             0.0f, 0.0f, 0.0f,                           //camera is looking at (0,0,0)
             0.0f, 1.0f, 0.0f); 
 
-	cube.render();
+	//objList[0]->render();
+	for(unsigned int i=0; i<objList.size(); ++i) {
+		objList[i]->render();
+	}
 	drawGrid();
 
 	glutSwapBuffers();
@@ -122,13 +128,13 @@ void ArrowKeys(int key, int x, int y) {
 	switch(key)
 	{
 	case GLUT_KEY_RIGHT:
-		cube.translate(1,0,0); break;
+		objList[currentObj]->translate(1,0,0); break;
 	case GLUT_KEY_LEFT:
-		cube.translate(-1,0,0); break;
+		objList[currentObj]->translate(-1,0,0); break;
 	case GLUT_KEY_UP:
-		cube.translate(0,0,1); break;
+		objList[currentObj]->translate(0,0,1); break;
 	case GLUT_KEY_DOWN:
-		cube.translate(0,0,-1); break;
+		objList[currentObj]->translate(0,0,-1); break;
 	}
 }
 
@@ -136,35 +142,41 @@ void keyboard(unsigned char key, int x, int y) {
 	if((key == 0x1b))
 		{exit(0);}
 	if(key == '.')
-		{cube.translate(0,-1,0);}
+		{objList[currentObj]->translate(0,-1,0);}
 	if(key == '/')
-		{cube.translate(0,1,0);}
+		{objList[currentObj]->translate(0,1,0);}
 		
 	//handle scaling	
 	if(key == 'w')
-		{cube.scale(.1,0,0);}
+		{objList[currentObj]->scale(.1,0,0);}
 	if(key == 'q')
-		{cube.scale(-.1,0,0);}
+		{objList[currentObj]->scale(-.1,0,0);}
 	if(key == 's')
-		{cube.scale(0,.1,0);}
+		{objList[currentObj]->scale(0,.1,0);}
 	if(key == 'a')
-		{cube.scale(0,-.1,0);}
+		{objList[currentObj]->scale(0,-.1,0);}
 	if(key == 'x')
-		{cube.scale(0,0,.1);}
+		{objList[currentObj]->scale(0,0,.1);}
 	if(key == 'z')
-		{cube.scale(0,0,-.1);}
+		{objList[currentObj]->scale(0,0,-.1);}
 	
 	//handle rotation	
 	if(key == 'c')
-		{cube.rotateAxis = 0;}
+		{objList[currentObj]->rotateAxis = 0;}
 	if(key == 'v')
-		{cube.rotateAxis = 1;}
+		{objList[currentObj]->rotateAxis = 1;}
 	if(key == 'b')
-		{cube.rotateAxis = 2;}
+		{objList[currentObj]->rotateAxis = 2;}
 	if(key == 'n')
-		{cube.rotate(0.5);}
+		{objList[currentObj]->rotate(0.5);}
 	if(key == 'm')
-		{cube.rotate(-0.5);}
+		{objList[currentObj]->rotate(-0.5);}
+		
+	if(key == '1') {
+		Object* newObj = new Object;
+		objList.push_back(newObj);
+		currentObj++;
+	}
 }
 
 int main(int argc, char **argv) {
@@ -173,6 +185,8 @@ int main(int argc, char **argv) {
     glutInitWindowPosition(50,50);
     glutInitWindowSize(windowWidth,windowHeight);
     glutCreateWindow("Render Magic");
+
+	objList.push_back(&cube);
 
     camRadius = 12.0f;
     camTheta = 2.80;

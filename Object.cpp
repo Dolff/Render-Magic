@@ -73,11 +73,11 @@ void Object::rotate(float angle) {
 void Object::render() {
 	glPushMatrix(); {
 		glColor3f(R,G,B);
+		glScalef(scaleX,scaleY,scaleZ);
 		glTranslatef(x,y,z);
 		glRotatef(rotateX, 1, 0, 0);
 		glRotatef(rotateY, 0, 1, 0);
 		glRotatef(rotateZ, 0, 0, 1);
-		glScalef(scaleX,scaleY,scaleZ);
 		
 		//GLUquadricObj *myQuad = gluNewQuadric();
 		switch(thisObj) {
