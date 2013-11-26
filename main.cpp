@@ -36,6 +36,7 @@ float camX, camY, camZ;
 unsigned int currentObj = 0;
 Object cube;
 vector<Object*> objList;
+bool selection = false;
 
 //draws a grid in the X-Z plane to help give the user perspective
 void drawGrid() {
@@ -128,13 +129,13 @@ void ArrowKeys(int key, int x, int y) {
 	switch(key)
 	{
 	case GLUT_KEY_RIGHT:
-		objList[currentObj]->translate(1,0,0); break;
+		objList[currentObj]->translate(.1,0,0); break;
 	case GLUT_KEY_LEFT:
-		objList[currentObj]->translate(-1,0,0); break;
+		objList[currentObj]->translate(-.1,0,0); break;
 	case GLUT_KEY_UP:
-		objList[currentObj]->translate(0,0,1); break;
+		objList[currentObj]->translate(0,0,.1); break;
 	case GLUT_KEY_DOWN:
-		objList[currentObj]->translate(0,0,-1); break;
+		objList[currentObj]->translate(0,0,-.1); break;
 	}
 }
 
@@ -172,10 +173,16 @@ void keyboard(unsigned char key, int x, int y) {
 	if(key == 'm')
 		{objList[currentObj]->rotate(-0.5);}
 		
+	if(key == 'o')
+		{selection = !selection;}
+		
 	if(key == '1') {
-		Object* newObj = new Object;
-		objList.push_back(newObj);
-		currentObj++;
+		if (selection) currentObj = 0;
+		else {
+			Object* newObj = new Object;
+			objList.push_back(newObj);
+			currentObj=objList.size()-1;
+		}
 	}
 }
 

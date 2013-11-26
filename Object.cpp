@@ -79,10 +79,11 @@ void Object::render() {
 		glRotatef(rotateY, 0, 1, 0);
 		glRotatef(rotateZ, 0, 0, 1);
 		
+		
 		//GLUquadricObj *myQuad = gluNewQuadric();
 		switch(thisObj) {
 			case CUBE:
-				glutSolidCube( 2 );
+				glutSolidCube( 1 );
 				break;
 		}
 	}; glPopMatrix();
