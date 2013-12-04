@@ -101,19 +101,19 @@ void render(void) {
 	glutSwapBuffers();
 }
 
-void resize2(int w, int h) {
-	glViewport(0,0,512,512);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(0,0,512,512);
-}
-
 void render2(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+	drawMenu();
 	glutSwapBuffers();
+}
+
+void resize2(int w, int h) {
+	glViewport(0,0,512,512);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0,512,0,512);
 }
 
 void initScene()
@@ -251,10 +251,11 @@ int main(int argc, char **argv) {
     glutInitWindowSize(512,512);
     glutCreateWindow("Menu");
     glutPositionWindow(80+512,50);
-    initScene();
+    //initScene();
     glutKeyboardFunc(menuKeyboard);
     glutDisplayFunc(render2);
     glutReshapeFunc(resize2);
+    glutMouseFunc(menuMouse);
 
     glutMainLoop();
 return 0;
