@@ -204,6 +204,11 @@ void keyboard(unsigned char key, int x, int y) {
 	}
 }
 
+void menuKeyboard(unsigned char key, int x, int y) {
+	if(key == 0x1b)
+		{exit(0);}
+}
+
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -226,6 +231,11 @@ int main(int argc, char **argv) {
 
     initScene();
     glutTimerFunc((unsigned int)(1000.0 / 60.0), myTimer, 0);
+
+    glutInitWindowSize(256,256);
+    glutCreateWindow("Menu");
+    initScene();
+    glutKeyboardFunc(menuKeyboard);
 
     glutMainLoop();
 return 0;
