@@ -18,6 +18,8 @@ int mMouseX;
 int mMouseY;
 GLint mouse1 = GLUT_UP;
 
+int transform = 0;
+
 void drawMenu() {
 	glPushMatrix(); {
 		glColor3f(1.0,0.0,0.0);
@@ -50,6 +52,15 @@ void menuMouse(int button, int state, int x, int y) {
 	
 	mMouseX = x;
 	mMouseY = y;
+	
+	if (mMouseY >= 480 && mMouseY <= 512) {
+		transform = 1;
+	} else if (mMouseY < 480 && mMouseY >= 256) {
+		transform = 2;
+	} else if (mMouseY < 256) {
+		transform = 0;
+	}
+	std::cout << transform << std::endl;
 }
 
 

@@ -113,7 +113,7 @@ void resize2(int w, int h) {
 	glViewport(0,0,512,512);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0,512,0,512);
+	gluOrtho2D(0,512,512,0);
 }
 
 void initScene()
@@ -163,11 +163,38 @@ void keyboard(unsigned char key, int x, int y) {
 	if(key == '/')
 		{objList[currentObj]->translate(0,1,0);}
 		
-	//handle scaling	
-	if(key == 'w')
-		{objList[currentObj]->scale(.1,0,0);}
-	if(key == 'q')
-		{objList[currentObj]->scale(-.1,0,0);}
+	//handle scaling
+	if(key == 'w') {
+		if (transform == 0) objList[currentObj]->translate(.1,0,0);
+		if (transform == 1) objList[currentObj]->scale(.1,0,0);
+		if (transform == 2) {objList[currentObj]->rotateAxis = 0; objList[currentObj]->rotate(0.5);}
+	}
+	if(key == 'q') {
+		if (transform == 0) objList[currentObj]->translate(-.1,0,0);
+		if (transform == 1) objList[currentObj]->scale(-.1,0,0);
+		if (transform == 2) {objList[currentObj]->rotateAxis = 0; objList[currentObj]->rotate(-0.5);}
+	}
+	if(key == 's') {
+		if (transform == 0) objList[currentObj]->translate(0,0,.1);
+		if (transform == 1) objList[currentObj]->scale(0,0,.1);
+		if (transform == 2) {objList[currentObj]->rotateAxis = 2; objList[currentObj]->rotate(0.5);}
+	}
+	if(key == 'a') {
+		if (transform == 0) objList[currentObj]->translate(0,0,-.1);
+		if (transform == 1) objList[currentObj]->scale(0,0,-.1);
+		if (transform == 2) {objList[currentObj]->rotateAxis = 2; objList[currentObj]->rotate(-0.5);}
+	}
+	if(key == 'x') {
+		if (transform == 0) objList[currentObj]->translate(0,.1,0);
+		if (transform == 1) objList[currentObj]->scale(0,.1,0);
+		if (transform == 2) {objList[currentObj]->rotateAxis = 1; objList[currentObj]->rotate(0.5);}
+	}
+	if(key == 'z') {
+		if (transform == 0) objList[currentObj]->translate(0,-.1,0);
+		if (transform == 1) objList[currentObj]->scale(0,-.1,0);
+		if (transform == 2) {objList[currentObj]->rotateAxis = 1; objList[currentObj]->rotate(-0.5);}
+	}
+	
 	if(key == 's')
 		{objList[currentObj]->scale(0,.1,0);}
 	if(key == 'a')
