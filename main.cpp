@@ -17,12 +17,13 @@
 #include <iostream>
 #include <vector>
 #include "Object.cpp"
+#include "Menu.cpp"
 
 using namespace std;
 
 //--Global Variables--
-int windowWidth = 768;
-int windowHeight = 768;
+int windowWidth = 512;
+int windowHeight = 512;
 //status of the mouse buttons
 GLint leftMouseButton = GLUT_UP, rightMouseButton = GLUT_UP;
 int mouseX = 0;
@@ -97,6 +98,21 @@ void render(void) {
 	}
 	drawGrid();
 
+	glutSwapBuffers();
+}
+
+void resize2(int w, int h) {
+	glViewport(0,0,512,512);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0,0,512,512);
+}
+
+void render2(void) {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glutSwapBuffers();
 }
 
@@ -232,10 +248,13 @@ int main(int argc, char **argv) {
     initScene();
     glutTimerFunc((unsigned int)(1000.0 / 60.0), myTimer, 0);
 
-    glutInitWindowSize(256,256);
+    glutInitWindowSize(512,512);
     glutCreateWindow("Menu");
+    glutPositionWindow(80+512,50);
     initScene();
     glutKeyboardFunc(menuKeyboard);
+    glutDisplayFunc(render2);
+    glutReshapeFunc(resize2);
 
     glutMainLoop();
 return 0;
