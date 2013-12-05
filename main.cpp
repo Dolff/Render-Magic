@@ -194,27 +194,6 @@ void keyboard(unsigned char key, int x, int y) {
 		if (transform == 1) objList[currentObj]->scale(0,-.1,0);
 		if (transform == 2) {objList[currentObj]->rotateAxis = 1; objList[currentObj]->rotate(-0.5);}
 	}
-	
-	if(key == 's')
-		{objList[currentObj]->scale(0,.1,0);}
-	if(key == 'a')
-		{objList[currentObj]->scale(0,-.1,0);}
-	if(key == 'x')
-		{objList[currentObj]->scale(0,0,.1);}
-	if(key == 'z')
-		{objList[currentObj]->scale(0,0,-.1);}
-	
-	//handle rotation	
-	if(key == 'c')
-		{objList[currentObj]->rotateAxis = 0;}
-	if(key == 'v')
-		{objList[currentObj]->rotateAxis = 1;}
-	if(key == 'b')
-		{objList[currentObj]->rotateAxis = 2;}
-	if(key == 'n')
-		{objList[currentObj]->rotate(0.5);}
-	if(key == 'm')
-		{objList[currentObj]->rotate(-0.5);}
 		
 	if(key == 'o')
 		{selection = !selection;}
