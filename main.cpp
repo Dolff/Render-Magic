@@ -17,7 +17,7 @@
 #include <iostream>
 #include <vector>
 #include "Object.cpp"
-#include "Menu.cpp"
+
 
 using namespace std;
 
@@ -38,6 +38,8 @@ unsigned int currentObj = 0;
 Object cube;
 vector<Object*> objList;
 bool selection = false;
+
+#include "Menu.cpp"
 
 //draws a grid in the X-Z plane to help give the user perspective
 void drawGrid() {

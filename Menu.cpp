@@ -192,6 +192,14 @@ void menuMouse(int button, int state, int x, int y) {
 			transform = 2;
 		}
 	}
+	
+	if (mMouseY <= 512-32 && mMouseY >= 512-64) {
+		if (mMouseX >= 32 && mMouseX <= 360) {
+			float r,g,b;
+			HSVtoRGB(&r,&g,&b,mMouseX-32.0,1.0,1.0);
+			objList[currentObj]->changeColor(r,g,b);
+		}
+	}
 	std::cout << transform << std::endl;
 }
 

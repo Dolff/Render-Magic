@@ -34,6 +34,7 @@ class Object {
 		void translate(float,float,float);
 		void scale(float,float,float);
 		void rotate(float);
+		void changeColor(float,float,float);
 		float rotateAxis;		
 	private:
 		float x,y,z;
@@ -50,6 +51,12 @@ Object::Object() {
 	rotateX = rotateY = rotateZ = 0;
 	thisObj = CUBE;
 	R = G = B = 1;
+}
+
+void Object::changeColor(float r, float g, float b) {
+	R = r;
+	G = g;
+	b = b;
 }
 
 void Object::translate(float dx, float dy, float dz) {
