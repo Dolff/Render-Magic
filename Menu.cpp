@@ -20,6 +20,73 @@ GLint mouse1 = GLUT_UP;
 
 int transform = 0;
 
+void HSVtoRGB( float *r, float *g, float *b, float h, float s, float v )
+{
+	int i;
+	float f, p, q, t;
+
+	if( s == 0 ) {
+		// achromatic (grey)
+		*r = *g = *b = v;
+		return;
+	}
+
+	h /= 60;			// sector 0 to 5
+	i = floor( h );
+	f = h - i;			// factorial part of h
+	p = v * ( 1 - s );
+	q = v * ( 1 - s * f );
+	t = v * ( 1 - s * ( 1 - f ) );
+
+	switch( i ) {
+		case 0:
+			*r = v;
+			*g = t;
+			*b = p;
+			break;
+		case 1:
+			*r = q;
+			*g = v;
+			*b = p;
+			break;
+		case 2:
+			*r = p;
+			*g = v;
+			*b = t;
+			break;
+		case 3:
+			*r = p;
+			*g = q;
+			*b = v;
+			break;
+		case 4:
+			*r = t;
+			*g = p;
+			*b = v;
+			break;
+		default:		// case 5:
+			*r = v;
+			*g = p;
+			*b = q;
+			break;
+	}
+
+}
+
+void drawColors() {
+	float r,g,b;
+	glPushMatrix(); {
+		glBegin(GL_QUAD_STRIP); {
+			for (float i = 0.0; i < 360.0; ++i) {
+				HSVtoRGB(&r,&g,&b,i,1.0,1.0);
+				glColor3f(r,g,b);
+				glVertex2f(i+32.0,512-32);
+				glVertex2f(i+32.0,512-64);
+			}
+		}; glEnd();
+	}; glPopMatrix();
+}
+
 void drawMenu() {
 	glPushMatrix(); {
 		glColor3f(0.3,0.3,1.0);
@@ -103,19 +170,9 @@ void drawMenu() {
 			}; glPopMatrix();			
 		}
 	}; glPopMatrix();
+	
+	drawColors();
 
-/*TESTING FOR MOUSE FUNCTION */
-/*	if (mouse1 == GLUT_DOWN) {
-		glPushMatrix(); {
-			glColor3f(0.0,1.0,0.0);
-			glBegin(GL_TRIANGLE_STRIP); {
-				glVertex2f(0.0,0.0);
-				glVertex2f(0.0,64.0);
-				glVertex2f(64.0,0.0);
-				glVertex2f(64.0,64.0);
-			} glEnd();
-		}; glPopMatrix();
-	} */
 }
 
 void menuMouse(int button, int state, int x, int y) {
@@ -137,6 +194,8 @@ void menuMouse(int button, int state, int x, int y) {
 	}
 	std::cout << transform << std::endl;
 }
+
+
 
 
 
