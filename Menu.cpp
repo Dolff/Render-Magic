@@ -87,6 +87,26 @@ void drawColors() {
 	}; glPopMatrix();
 }
 
+void outline(float x1,float y1,float x2,float y2) {
+	//1,1 is upper left and 2,2 is bottom right
+	glPushMatrix(); {
+		glColor3f(1.0,0.2,0.2);
+		glBegin(GL_TRIANGLE_STRIP); {
+			glVertex2f(	x1-4.0, y1-4.0);
+			glVertex2f(	x1-4.0, y1);
+			glVertex2f(	x2,	y1-4.0);
+			glVertex2f( x2, y1);
+			glVertex2f( x2+4.0, y1-4.0);
+			glVertex2f( x2, y2);
+			glVertex2f( x2+4.0, y2+4.0);
+			glVertex2f( x1, y2);
+			glVertex2f( x1-4.0, y2+4.0);
+			glVertex2f( x1, y1);
+			glVertex2f( x1-4.0, y1);
+		}; glEnd();
+	}; glPopMatrix();
+}
+
 void drawMenu() {
 	glPushMatrix(); {
 		glColor3f(0.3,0.3,1.0);
@@ -98,22 +118,7 @@ void drawMenu() {
 			glVertex2f( 128.0,  96.0);
 		}; glEnd();
 		if (transform == 0) {
-			glPushMatrix(); {
-				glColor3f(1.0,0.2,0.2);
-				glBegin(GL_TRIANGLE_STRIP); {
-					glVertex2f(  28.0,  28.0);
-					glVertex2f(  28.0,  32.0);
-					glVertex2f( 128.0,  28.0);
-					glVertex2f( 128.0,  32.0);
-					glVertex2f( 132.0,  28.0);
-					glVertex2f( 128.0,  96.0);
-					glVertex2f( 132.0, 100.0);
-					glVertex2f(  32.0,  96.0);
-					glVertex2f(  28.0, 100.0);
-					glVertex2f(  32.0,  32.0);
-					glVertex2f(  28.0,  32.0);
-				}; glEnd();
-			}; glPopMatrix();			
+			outline(32.0,32.0,128.0,96.0);
 		}
 		
 		//scale button
@@ -125,22 +130,7 @@ void drawMenu() {
 			glVertex2f( 128.0, 192.0);
 		}; glEnd();
 		if (transform == 1) {
-			glPushMatrix(); {
-				glColor3f(1.0,0.2,0.2);
-				glBegin(GL_TRIANGLE_STRIP); {
-					glVertex2f(  28.0, 124.0);
-					glVertex2f(  28.0, 128.0);
-					glVertex2f( 128.0, 124.0);
-					glVertex2f( 128.0, 128.0);
-					glVertex2f( 132.0, 124.0);
-					glVertex2f( 128.0, 192.0);
-					glVertex2f( 132.0, 196.0);
-					glVertex2f(  32.0, 192.0);
-					glVertex2f(  28.0, 196.0);
-					glVertex2f(  32.0, 128.0);
-					glVertex2f(  28.0, 128.0);
-				}; glEnd();
-			}; glPopMatrix();			
+			outline(32.0,128.0,128.0,192.0);			
 		}
 		
 		//rotate button
@@ -152,22 +142,7 @@ void drawMenu() {
 			glVertex2f( 128.0, 288.0);
 		}; glEnd();
 		if (transform == 2) {
-			glPushMatrix(); {
-				glColor3f(1.0,0.2,0.2);
-				glBegin(GL_TRIANGLE_STRIP); {
-					glVertex2f(  28.0, 220.0);
-					glVertex2f(  28.0, 224.0);
-					glVertex2f( 128.0, 220.0);
-					glVertex2f( 128.0, 224.0);
-					glVertex2f( 132.0, 220.0);
-					glVertex2f( 128.0, 288.0);
-					glVertex2f( 132.0, 292.0);
-					glVertex2f(  32.0, 288.0);
-					glVertex2f(  28.0, 292.0);
-					glVertex2f(  32.0, 224.0);
-					glVertex2f(  28.0, 224.0);
-				}; glEnd();
-			}; glPopMatrix();			
+			outline(32.0,224.0,128.0,288.0);			
 		}
 	}; glPopMatrix();
 	
@@ -197,10 +172,11 @@ void menuMouse(int button, int state, int x, int y) {
 		if (mMouseX >= 32 && mMouseX <= 360) {
 			float r,g,b;
 			HSVtoRGB(&r,&g,&b,mMouseX-32.0,1.0,1.0);
+			std::cout << r << " " << g << " " << b << std::endl;
 			objList[currentObj]->changeColor(r,g,b);
 		}
 	}
-	std::cout << transform << std::endl;
+	//std::cout << transform << std::endl;
 }
 
 
