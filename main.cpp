@@ -33,6 +33,8 @@ int mouseY = 0;
 float camTheta, camPhi, camRadius;
 //cartesian coords
 float camX, camY, camZ;
+//world coordinates
+float objX, objY, objZ;
 
 unsigned int currentObj = 0;
 Object cube;
@@ -88,11 +90,9 @@ void resizeWindow(int w, int h) {
 void render(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	gluLookAt(camX, camY, camZ, objX, objY, objZ, 0.0f, 1.0f, 0.0f); 
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-    gluLookAt(camX, camY, camZ,     //camera is located at (x,y,z)
-            0.0f, 0.0f, 0.0f,                           //camera is looking at (0,0,0)
-            0.0f, 1.0f, 0.0f); 
 
 	//objList[0]->render();
 	for(unsigned int i=0; i<objList.size(); ++i) {
@@ -122,14 +122,36 @@ void initScene()
         {glEnable(GL_DEPTH_TEST);
 
         //turns the lights on
-         float lightCol[4] = { 1, 1, 1, 1};
+         float lightCol[4] = { 0, 0, 1, 1};
          float ambientCol[4] = {0.0, 0.0, 0.0, 1.0};
          float lPosition[4] = { 10, 10, 10, 1 };
          glLightfv(GL_LIGHT0,GL_POSITION,lPosition);
          glLightfv(GL_LIGHT0,GL_DIFFUSE,lightCol);
          glLightfv(GL_LIGHT0, GL_AMBIENT, ambientCol);
+
+	 float lposition2[4] = {10, -10, -10, 1};
+	 float lightCol2[4] = {1,0,0,1};
+         glLightfv(GL_LIGHT1,GL_POSITION,lposition2);
+         glLightfv(GL_LIGHT1,GL_DIFFUSE,lightCol2);
+         glLightfv(GL_LIGHT1, GL_AMBIENT, ambientCol);
+
+	 float lposition3[4] = {10, 10, -10, 1};
+	 float lightCol3[4] = {1,0,1,1};
+         glLightfv(GL_LIGHT2,GL_POSITION,lposition3);
+         glLightfv(GL_LIGHT2,GL_DIFFUSE,lightCol3);
+         glLightfv(GL_LIGHT2, GL_AMBIENT, ambientCol);
+
+	 float lposition4[4] = {-10, 10, 10, 1};
+	 float lightCol4[4] = {1,1,0,1};
+         glLightfv(GL_LIGHT3,GL_POSITION,lposition4);
+         glLightfv(GL_LIGHT3,GL_DIFFUSE,lightCol4);
+         glLightfv(GL_LIGHT3, GL_AMBIENT, ambientCol);
+
          glEnable(GL_LIGHTING);
          glEnable(GL_LIGHT0);
+	 glEnable(GL_LIGHT1);
+	 glEnable(GL_LIGHT2);
+	 glEnable(GL_LIGHT3);
 
          glEnable(GL_COLOR_MATERIAL);
          glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
@@ -228,6 +250,30 @@ void keyboard(unsigned char key, int x, int y) {
 	}
 }
 
+void mouseCall(int button, int position, int x, int y)
+{
+	if(button == GLUT_LEFT_BUTTON) leftMouseButton = position;
+	else if(button == GLUT_RIGHT_BUTTON) rightMouseButton = position;
+
+	mouseX = x;
+	mouseY = y;
+}
+
+void mouseCam(int x, int y)
+{
+	if(leftMouseButton == GLUT_DOWN)
+	{
+		camTheta += (x - mouseX)*0.005;
+		camPhi   += (y - mouseY)*0.005;
+
+		if(camPhi <= 0) camPhi = 0+0.001;
+		if(camPhi >= M_PI) camPhi = M_PI-0.001;
+		findCameraPos(camTheta, camPhi, camRadius, camX, camY, camZ);
+	}
+	mouseX = x;
+	mouseY = y;
+}
+
 void menuKeyboard(unsigned char key, int x, int y) {
 	if(key == 0x1b)
 		{exit(0);}
@@ -245,12 +291,16 @@ int main(int argc, char **argv) {
     camRadius = 12.0f;
     camTheta = 2.80;
     camPhi = 2.0;
+
+    objX = objY = objZ = 0.0f;
     
-    findCameraPos(camTheta, camPhi, camRadius,
-						   camX, camY, camZ);
+    findCameraPos(camTheta, camPhi, camRadius, camX, camY, camZ);
+
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(ArrowKeys);
     glutDisplayFunc(render);
+    glutMouseFunc(mouseCall);
+    glutMotionFunc(mouseCam);
     glutReshapeFunc(resizeWindow);
 
     initScene();
