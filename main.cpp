@@ -90,6 +90,12 @@ void resizeWindow(int w, int h) {
 void render(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	
+	if (lightsOn[0]) glEnable(GL_LIGHT0); else glDisable(GL_LIGHT0);
+	if (lightsOn[1]) glEnable(GL_LIGHT1); else glDisable(GL_LIGHT1);
+	if (lightsOn[2]) glEnable(GL_LIGHT2); else glDisable(GL_LIGHT2);
+	if (lightsOn[3]) glEnable(GL_LIGHT3); else glDisable(GL_LIGHT3);
+	
 	gluLookAt(camX, camY, camZ, objX, objY, objZ, 0.0f, 1.0f, 0.0f); 
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -98,7 +104,7 @@ void render(void) {
 	for(unsigned int i=0; i<objList.size(); ++i) {
 		objList[i]->render();
 	}
-	drawGrid();
+	if (gridOn) drawGrid();
 
 	glutSwapBuffers();
 }
@@ -295,6 +301,11 @@ int main(int argc, char **argv) {
     objX = objY = objZ = 0.0f;
     
     findCameraPos(camTheta, camPhi, camRadius, camX, camY, camZ);
+    
+    lightsOn.push_back(true);
+    lightsOn.push_back(true);
+    lightsOn.push_back(true);
+    lightsOn.push_back(true);
 
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(ArrowKeys);

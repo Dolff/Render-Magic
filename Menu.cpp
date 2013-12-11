@@ -22,6 +22,7 @@ int transform = 0;
 int lightNum = 0;
 bool moveToggle = true;
 bool gridOn = true;
+vector<bool> lightsOn;
 
 
 void HSVtoRGB( float *r, float *g, float *b, float h, float s, float v )
@@ -219,7 +220,7 @@ void toggleButtons() {
 	}; glPopMatrix();
 	if (!moveToggle) {glColor3f(1.0,1.0,0.0); outline(288.0,32.0,352.0,96.0,1);}
 	
-	//toggle grid
+	//toggle light
 	glPushMatrix(); {
 		glColor3f(0.0,0.0,1.0); 
 		glBegin(GL_TRIANGLE_STRIP); {
@@ -230,7 +231,7 @@ void toggleButtons() {
 		}; glEnd();		
 	}; glPopMatrix();
 	
-	//toggle light
+	//toggle grid
 	glPushMatrix(); {
 		glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
@@ -240,7 +241,8 @@ void toggleButtons() {
 			glVertex2f( 256.0,  240.0);
 		}; glEnd();
 	}; glPopMatrix();
-	//toggle 
+	if (gridOn) outline(192.0,176.0,256.0,240.0,1);
+
 }
 
 void drawMenu() {
@@ -290,28 +292,42 @@ void menuMouse(int button, int state, int x, int y) {
 	
 	mMouseX = x;
 	mMouseY = y;
+	if (state == GLUT_DOWN) {
+		//Transform button selection
+		if (mMouseX >=32 && mMouseX <=128) {
+			if (mMouseY >= 32 && mMouseY <= 96) { transform = 0; }
+			else if (mMouseY >= 128+48 && mMouseY <= 192+48) { transform = 1; }
+			else if (mMouseY >= 224+96 && mMouseY <= 288+96) { transform = 2; }
+		}
 	
-	//Transform button selection
-	if (mMouseX >=32 && mMouseX <=128) {
-		if (mMouseY >= 32 && mMouseY <= 96) { transform = 0; }
-		else if (mMouseY >= 128+48 && mMouseY <= 192+48) { transform = 1; }
-		else if (mMouseY >= 224+96 && mMouseY <= 288+96) { transform = 2; }
-	}
+		//toggles
+		if (mMouseX >= 192 && mMouseX <= 256) {
+			if (mMouseY >= 32 && mMouseY <= 96) {moveToggle = true;}
+			if (mMouseY >= 176 && mMouseY <=240) {gridOn = !gridOn;}
+		}
+		
+		if (mMouseX >= 288 && mMouseX <=352) {
+			if (mMouseY >= 32 && mMouseY <= 96) {moveToggle = false;}
+			if (mMouseY >= 176 && mMouseY <= 240) {lightsOn[lightNum] = !lightsOn[lightNum];}
+		}
 	
-	if (mMouseX > 416 && mMouseX <=480) {
-		if (mMouseY >= 32 && mMouseY <= 96) { lightNum = 0; }
-		else if (mMouseY >= 128 && mMouseY <= 192) { lightNum = 1; }
-		else if (mMouseY >= 224 && mMouseY <= 288) { lightNum = 2; }
-		else if (mMouseY >= 320 && mMouseY <= 384) { lightNum = 3; }
-	}
+		//light button selection
+		if (mMouseX > 416 && mMouseX <=480) {
+			if (mMouseY >= 32 && mMouseY <= 96) { lightNum = 0; }
+			else if (mMouseY >= 128 && mMouseY <= 192) { lightNum = 1; }
+			else if (mMouseY >= 224 && mMouseY <= 288) { lightNum = 2; }
+			else if (mMouseY >= 320 && mMouseY <= 384) { lightNum = 3; }
+			else if (mMouseY >= 416 && mMouseY <= 480) { lightNum = 4; }
+		}
 	
-	//Color selection
-	if (mMouseY <= 512-32 && mMouseY >= 512-64) {
-		if (mMouseX >= 32 && mMouseX <= 360) {
-			float r,g,b;
-			HSVtoRGB(&r,&g,&b,mMouseX-32.0,1.0,1.0);
-			std::cout << r << " " << g << " " << b << std::endl;
-			objList[currentObj]->changeColor(r,g,b);
+		//Color selection
+		if (mMouseY <= 512-32 && mMouseY >= 512-64) {
+			if (mMouseX >= 32 && mMouseX <= 360) {
+				float r,g,b;
+				HSVtoRGB(&r,&g,&b,mMouseX-32.0,1.0,1.0);
+				std::cout << r << " " << g << " " << b << std::endl;
+				objList[currentObj]->changeColor(r,g,b);
+			}
 		}
 	}
 	//std::cout << transform << std::endl;
