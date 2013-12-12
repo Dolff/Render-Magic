@@ -36,12 +36,13 @@ class Object {
 		void scale(float,float,float);
 		void rotate(float);
 		void changeColor(float,float,float);
+		void changeAlpha(float);
 		float rotateAxis;		
 	private:
 		float x,y,z;
 		float scaleX, scaleY, scaleZ;
 		float rotateX, rotateY, rotateZ;
-		float R, G, B;
+		float R, G, B, A;
 		OBJ_TYPE thisObj;
 
 };
@@ -51,7 +52,8 @@ Object::Object() {
 	scaleX = scaleY = scaleZ = 1;
 	rotateX = rotateY = rotateZ = 0;
 	thisObj = CUBE;
-	R = G = B = 1;
+	R = G = B = A = 1;
+	A = .5;
 }
 
 Object::Object(int objType) {
@@ -61,13 +63,17 @@ Object::Object(int objType) {
 	if (objType == 0) thisObj = CUBE;
 	if (objType == 1) thisObj = SPHERE;
 	if (objType == 2) thisObj = CYLINDER;
-	R = G = B = 1;
+	R = G = B = A = 1;
 }
 
 void Object::changeColor(float r, float g, float b) {
 	R = r;
 	G = g;
 	b = b;
+}
+
+void Object::changeAlpha(float alpha) {
+	A = alpha;
 }
 
 void Object::translate(float dx, float dy, float dz) {
@@ -90,7 +96,8 @@ void Object::rotate(float angle) {
 
 void Object::render() {
 	glPushMatrix(); {
-		glColor3f(R,G,B);
+		glColor4f(R,G,B,A);
+		std::cout << "A: " << A << std::endl;
 		glTranslatef(x,y,z);
 		glRotatef(rotateX, 1, 0, 0);
 		glRotatef(rotateY, 0, 1, 0);

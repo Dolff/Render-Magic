@@ -512,7 +512,7 @@ void writeRotate(float x, float y) {
 
 void LightButtons() {
 	glPushMatrix(); {
-		if (!lightsOn[0]) glColor3f(0.5,0.5,0.5);
+		if (!lightsOn[0]) glColor3f(0.8,0.8,0.8);
 		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 32.0);
@@ -524,7 +524,7 @@ void LightButtons() {
 
 	if (lightNum == 0) outline(416.0,32.0,480.0,96.0,1);
 	glPushMatrix(); {
-		if (!lightsOn[1]) glColor3f(0.5,0.5,0.5);
+		if (!lightsOn[1]) glColor3f(0.8,0.8,0.8);
 		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 128.0);
@@ -535,7 +535,7 @@ void LightButtons() {
 	}; glPopMatrix();
 	if (lightNum == 1) outline (416.0,128.0,480.0,192.0,1);
 	glPushMatrix(); {
-		if (!lightsOn[2]) glColor3f(0.5,0.5,0.5);
+		if (!lightsOn[2]) glColor3f(0.8,0.8,0.8);
 		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 224.0);
@@ -546,7 +546,7 @@ void LightButtons() {
 	}; glPopMatrix();
 	if (lightNum == 2) outline (416.0,224.0,480.0,288.0,1);
 	glPushMatrix(); {
-		if (!lightsOn[3]) glColor3f(0.5,0.5,0.5);
+		if (!lightsOn[3]) glColor3f(0.8,0.8,0.8);
 		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 320.0);
@@ -558,7 +558,7 @@ void LightButtons() {
 	if (lightNum == 3) outline (416.0,320.0,480.0,384.0,1);
 	
 	glPushMatrix(); {
-		if (!lightsOn[4]) glColor3f(0.5,0.5,0.5);
+		if (!lightsOn[4]) glColor3f(0.8,0.8,0.8);
 		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 416.0);
@@ -705,6 +705,25 @@ void menuMouse(int button, int state, int x, int y) {
 			if (mMouseY >= 32 && mMouseY <= 96) {moveToggle = false;}
 			if (mMouseY >= 176 && mMouseY <= 240) {lightsOn[lightNum] = !lightsOn[lightNum];}
 		}
+		
+		
+		if (mMouseX >= 192 && mMouseX <=352) {
+			//change color on grayscale
+			if (mMouseY >= 320+48  && mMouseY <= 320+80) {
+				float r,g,b;
+				r = g = b = ((mMouseX-192.0)/(352.0-192.0));
+				//std::cout << r << " " << g << " " << b << std::endl;
+				objList[currentObj]->changeColor(r,g,b);
+			}
+			
+			//change opacity
+			if (mMouseY >= 320-16 && mMouseY <= 320+16) {
+				objList[currentObj]->changeAlpha((mMouseX-192.0)/(352.0-192.0));
+			}
+		}
+		
+		//change opacity
+		
 	
 		//light button selection
 		if (mMouseX > 416 && mMouseX <=480) {
@@ -720,7 +739,7 @@ void menuMouse(int button, int state, int x, int y) {
 			if (mMouseX >= 32 && mMouseX <= 360) {
 				float r,g,b;
 				HSVtoRGB(&r,&g,&b,mMouseX-32.0,1.0,1.0);
-				std::cout << r << " " << g << " " << b << std::endl;
+				//std::cout << r << " " << g << " " << b << std::endl;
 				objList[currentObj]->changeColor(r,g,b);
 			}
 		}
