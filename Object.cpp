@@ -69,7 +69,7 @@ Object::Object(int objType) {
 void Object::changeColor(float r, float g, float b) {
 	R = r;
 	G = g;
-	b = b;
+	B = b;
 }
 
 void Object::changeAlpha(float alpha) {
@@ -96,8 +96,9 @@ void Object::rotate(float angle) {
 
 void Object::render() {
 	glPushMatrix(); {
+		std::cout << "R: " << R << " G: " << G << " B: " << B << std::endl;
 		glColor4f(R,G,B,A);
-		std::cout << "A: " << A << std::endl;
+		//std::cout << "A: " << A << std::endl;
 		glTranslatef(x,y,z);
 		glRotatef(rotateX, 1, 0, 0);
 		glRotatef(rotateY, 0, 1, 0);
