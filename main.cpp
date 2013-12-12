@@ -153,11 +153,18 @@ void initScene()
          glLightfv(GL_LIGHT3,GL_DIFFUSE,lightCol4);
          glLightfv(GL_LIGHT3, GL_AMBIENT, ambientCol);
 
+	 float lposition5[4] = {-10, 10, -10, 1};
+	 float lightCol5[4] = {1,1,1,1};
+         glLightfv(GL_LIGHT4,GL_POSITION,lposition5);
+         glLightfv(GL_LIGHT4,GL_DIFFUSE,lightCol5);
+         glLightfv(GL_LIGHT4, GL_AMBIENT, ambientCol);
+
          glEnable(GL_LIGHTING);
          glEnable(GL_LIGHT0);
 	 glEnable(GL_LIGHT1);
 	 glEnable(GL_LIGHT2);
 	 glEnable(GL_LIGHT3);
+	 glEnable(GL_LIGHT4);
 
          glEnable(GL_COLOR_MATERIAL);
          glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
