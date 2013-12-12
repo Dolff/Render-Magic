@@ -625,7 +625,7 @@ writeIO(305,209);
 	//toggle grid
 	glPushMatrix(); {
 		if (gridOn) glColor3f(0.0,0.0,1.0);
-		else glColor3f(0.5,0.5,0.5);
+		else glColor3f(0.8,0.8,0.8);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f( 192.0,  176.0);
 			glVertex2f( 256.0,  176.0);
