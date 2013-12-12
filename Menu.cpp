@@ -139,7 +139,8 @@ void drawColors() {
 
 void LightButtons() {
 	glPushMatrix(); {
-		glColor3f(0.0,0.0,1.0);
+		if (!lightsOn[0]) glColor3f(0.5,0.5,0.5);
+		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 32.0);
 			glVertex2f(480.0, 32.0);
@@ -150,7 +151,8 @@ void LightButtons() {
 	if (lightNum == 0) outline(416.0,32.0,480.0,96.0,1);
 	
 	glPushMatrix(); {
-		glColor3f(0.0,0.0,1.0);
+		if (!lightsOn[1]) glColor3f(0.5,0.5,0.5);
+		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 128.0);
 			glVertex2f(480.0, 128.0);
@@ -161,7 +163,8 @@ void LightButtons() {
 	if (lightNum == 1) outline (416.0,128.0,480.0,192.0,1);
 	
 	glPushMatrix(); {
-		glColor3f(0.0,0.0,1.0);
+		if (!lightsOn[2]) glColor3f(0.5,0.5,0.5);
+		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 224.0);
 			glVertex2f(480.0, 224.0);
@@ -172,7 +175,8 @@ void LightButtons() {
 	if (lightNum == 2) outline (416.0,224.0,480.0,288.0,1);
 	
 	glPushMatrix(); {
-		glColor3f(0.0,0.0,1.0);
+		if (!lightsOn[3]) glColor3f(0.5,0.5,0.5);
+		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 320.0);
 			glVertex2f(480.0, 320.0);
@@ -183,7 +187,8 @@ void LightButtons() {
 	if (lightNum == 3) outline (416.0,320.0,480.0,384.0,1);
 	
 	glPushMatrix(); {
-		glColor3f(0.0,0.0,1.0);
+		if (!lightsOn[4]) glColor3f(0.5,0.5,0.5);
+		else glColor3f(0.0,0.0,1.0);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f(416.0, 416.0);
 			glVertex2f(480.0, 416.0);
@@ -233,7 +238,8 @@ void toggleButtons() {
 	
 	//toggle grid
 	glPushMatrix(); {
-		glColor3f(0.0,0.0,1.0);
+		if (gridOn) glColor3f(0.0,0.0,1.0);
+		else glColor3f(0.5,0.5,0.5);
 		glBegin(GL_TRIANGLE_STRIP); {
 			glVertex2f( 192.0,  176.0);
 			glVertex2f( 256.0,  176.0);
@@ -241,7 +247,7 @@ void toggleButtons() {
 			glVertex2f( 256.0,  240.0);
 		}; glEnd();
 	}; glPopMatrix();
-	if (gridOn) outline(192.0,176.0,256.0,240.0,1);
+
 
 }
 
@@ -330,6 +336,7 @@ void menuMouse(int button, int state, int x, int y) {
 			}
 		}
 	}
+	glutPostRedisplay();
 	//std::cout << transform << std::endl;
 }
 

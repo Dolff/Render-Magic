@@ -194,12 +194,12 @@ void keyboard(unsigned char key, int x, int y) {
 		{objList[currentObj]->translate(0,1,0);}
 		
 	//handle scaling
-	if(key == 'w') {
+	if(key == 'd') {
 		if (transform == 0) objList[currentObj]->translate(.1,0,0);
 		if (transform == 1) objList[currentObj]->scale(.1,0,0);
 		if (transform == 2) {objList[currentObj]->rotateAxis = 0; objList[currentObj]->rotate(0.5);}
 	}
-	if(key == 'q') {
+	if(key == 'a') {
 		if (transform == 0) objList[currentObj]->translate(-.1,0,0);
 		if (transform == 1) objList[currentObj]->scale(-.1,0,0);
 		if (transform == 2) {objList[currentObj]->rotateAxis = 0; objList[currentObj]->rotate(-0.5);}
@@ -209,17 +209,17 @@ void keyboard(unsigned char key, int x, int y) {
 		if (transform == 1) objList[currentObj]->scale(0,0,.1);
 		if (transform == 2) {objList[currentObj]->rotateAxis = 2; objList[currentObj]->rotate(0.5);}
 	}
-	if(key == 'a') {
+	if(key == 'w') {
 		if (transform == 0) objList[currentObj]->translate(0,0,-.1);
 		if (transform == 1) objList[currentObj]->scale(0,0,-.1);
 		if (transform == 2) {objList[currentObj]->rotateAxis = 2; objList[currentObj]->rotate(-0.5);}
 	}
-	if(key == 'x') {
+	if(key == 'e') {
 		if (transform == 0) objList[currentObj]->translate(0,.1,0);
 		if (transform == 1) objList[currentObj]->scale(0,.1,0);
 		if (transform == 2) {objList[currentObj]->rotateAxis = 1; objList[currentObj]->rotate(0.5);}
 	}
-	if(key == 'z') {
+	if(key == 'q') {
 		if (transform == 0) objList[currentObj]->translate(0,-.1,0);
 		if (transform == 1) objList[currentObj]->scale(0,-.1,0);
 		if (transform == 2) {objList[currentObj]->rotateAxis = 1; objList[currentObj]->rotate(-0.5);}
@@ -260,14 +260,26 @@ void mouseCall(int button, int position, int x, int y)
 {
 	if(button == GLUT_LEFT_BUTTON) leftMouseButton = position;
 	else if(button == GLUT_RIGHT_BUTTON) rightMouseButton = position;
+	
+	if (button == 3) {
+		if (position == GLUT_UP) return;
+		camRadius+=0.5;
+	} 
+	
+	if (button == 4) {
+		if (position == GLUT_UP) return;
+		camRadius-=0.5;
+	} 
 
+	findCameraPos(camTheta, camPhi, camRadius, camX, camY, camZ);
 	mouseX = x;
 	mouseY = y;
+	glutPostRedisplay();
 }
 
 void mouseCam(int x, int y)
 {
-	if(leftMouseButton == GLUT_DOWN)
+	if(rightMouseButton == GLUT_DOWN)
 	{
 		camTheta += (x - mouseX)*0.005;
 		camPhi   += (y - mouseY)*0.005;
@@ -278,6 +290,7 @@ void mouseCam(int x, int y)
 	}
 	mouseX = x;
 	mouseY = y;
+	glutPostRedisplay();
 }
 
 void menuKeyboard(unsigned char key, int x, int y) {
