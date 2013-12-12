@@ -231,14 +231,24 @@ void keyboard(unsigned char key, int x, int y) {
 	if(key == '1') {
 		if (selection) currentObj = 0;
 		else {
-			Object* newObj = new Object;
+			Object* newObj = new Object(0);
 			objList.push_back(newObj);
 			currentObj=objList.size()-1;
 		}
 	} else if (key == '2') {
-		if (selection) currentObj = 1;		
+		if (selection) currentObj = 1;
+		else {
+			Object* newObj = new Object(1);
+			objList.push_back(newObj);
+			currentObj=objList.size()-1;
+		}		
 	} else if (key == '3') {
 		if (selection) currentObj = 2;	
+		else {
+			Object* newObj = new Object(2);
+			objList.push_back(newObj);
+			currentObj=objList.size()-1;
+		}
 	} else if (key == '4') {
 		if (selection) currentObj = 3;	
 	} else if (key == '5') {

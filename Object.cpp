@@ -30,6 +30,7 @@ enum OBJ_TYPE {
 class Object {
 	public:
 		Object();
+		Object(int);
 		void render();
 		void translate(float,float,float);
 		void scale(float,float,float);
@@ -50,6 +51,16 @@ Object::Object() {
 	scaleX = scaleY = scaleZ = 1;
 	rotateX = rotateY = rotateZ = 0;
 	thisObj = CUBE;
+	R = G = B = 1;
+}
+
+Object::Object(int objType) {
+	x = y = z = 0;
+	scaleX = scaleY = scaleZ = 1;
+	rotateX = rotateY = rotateZ = 0;
+	if (objType == 0) thisObj = CUBE;
+	if (objType == 1) thisObj = SPHERE;
+	if (objType == 2) thisObj = CYLINDER;
 	R = G = B = 1;
 }
 
@@ -81,16 +92,27 @@ void Object::render() {
 	glPushMatrix(); {
 		glColor3f(R,G,B);
 		glTranslatef(x,y,z);
-		glScalef(scaleX,scaleY,scaleZ);
 		glRotatef(rotateX, 1, 0, 0);
 		glRotatef(rotateY, 0, 1, 0);
 		glRotatef(rotateZ, 0, 0, 1);
+		glScalef(scaleX,scaleY,scaleZ);
+
+
 		
 		
 		//GLUquadricObj *myQuad = gluNewQuadric();
 		switch(thisObj) {
 			case CUBE:
 				glutSolidCube( 1 );
+				break;
+			case SPHERE:
+				glutSolidSphere( 1 , 20, 20);
+				break;
+			case CYLINDER:
+				GLUquadricObj *myquad = gluNewQuadric();
+				gluQuadricDrawStyle( myquad, GLU_FILL );
+				gluCylinder( myquad, 1, 1, 1, 20, 20 );
+				gluDeleteQuadric( myquad );
 				break;
 		}
 	}; glPopMatrix();
