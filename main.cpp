@@ -41,6 +41,12 @@ Object cube;
 vector<Object*> objList;
 bool selection = false;
 
+float lPosition[4] = { 10, 10, 10, 1 };
+float lposition2[4] = {10, -10, -10, 1};
+float lposition3[4] = {10, 10, -10, 1};
+float lposition4[4] = {-10, 10, 10, 1};
+float lposition5[4] = {-10, 10, -10, 1};
+
 #include "Menu.cpp"
 
 //draws a grid in the X-Z plane to help give the user perspective
@@ -201,35 +207,84 @@ void keyboard(unsigned char key, int x, int y) {
 		{objList[currentObj]->translate(0,1,0);}
 		
 	//handle scaling
+	//handle scaling
 	if(key == 'd') {
-		if (transform == 0) objList[currentObj]->translate(.1,0,0);
-		if (transform == 1) objList[currentObj]->scale(.1,0,0);
-		if (transform == 2) {objList[currentObj]->rotateAxis = 0; objList[currentObj]->rotate(0.5);}
+		if (moveToggle) {
+			if (transform == 0) objList[currentObj]->translate(.1,0,0);
+			if (transform == 1) objList[currentObj]->scale(.1,0,0);
+			if (transform == 2) {objList[currentObj]->rotateAxis = 0; objList[currentObj]->rotate(0.5);}
+		} else {
+			if (lightNum == 0) {lPosition[0]++; glLightfv(GL_LIGHT0,GL_POSITION,lPosition);}
+			if (lightNum == 1) {lposition2[0]++; glLightfv(GL_LIGHT1,GL_POSITION,lposition2);}
+			if (lightNum == 2) {lposition3[0]++; glLightfv(GL_LIGHT2,GL_POSITION,lposition3);}
+			if (lightNum == 3) {lposition4[0]++; glLightfv(GL_LIGHT3,GL_POSITION,lposition4);}
+			if (lightNum == 4) {lposition5[0]++; glLightfv(GL_LIGHT4,GL_POSITION,lposition5);}
+		}
 	}
 	if(key == 'a') {
-		if (transform == 0) objList[currentObj]->translate(-.1,0,0);
-		if (transform == 1) objList[currentObj]->scale(-.1,0,0);
-		if (transform == 2) {objList[currentObj]->rotateAxis = 0; objList[currentObj]->rotate(-0.5);}
+		if (moveToggle) {
+			if (transform == 0) objList[currentObj]->translate(-.1,0,0);
+			if (transform == 1) objList[currentObj]->scale(-.1,0,0);
+			if (transform == 2) {objList[currentObj]->rotateAxis = 0; objList[currentObj]->rotate(-0.5);}
+		} else {
+			if (lightNum == 0) {lPosition[0]--; glLightfv(GL_LIGHT0,GL_POSITION,lPosition);}
+			if (lightNum == 1) {lposition2[0]--; glLightfv(GL_LIGHT1,GL_POSITION,lposition2);}
+			if (lightNum == 2) {lposition3[0]--; glLightfv(GL_LIGHT2,GL_POSITION,lposition3);}
+			if (lightNum == 3) {lposition4[0]--; glLightfv(GL_LIGHT3,GL_POSITION,lposition4);}
+			if (lightNum == 4) {lposition5[0]--; glLightfv(GL_LIGHT4,GL_POSITION,lposition5);}
+		}
 	}
 	if(key == 's') {
-		if (transform == 0) objList[currentObj]->translate(0,0,.1);
-		if (transform == 1) objList[currentObj]->scale(0,0,.1);
-		if (transform == 2) {objList[currentObj]->rotateAxis = 2; objList[currentObj]->rotate(0.5);}
+		if (moveToggle) {
+			if (transform == 0) objList[currentObj]->translate(0,0,.1);
+			if (transform == 1) objList[currentObj]->scale(0,0,.1);
+			if (transform == 2) {objList[currentObj]->rotateAxis = 2; objList[currentObj]->rotate(0.5);}
+		} else {
+			if (lightNum == 0) {lPosition[2]++; glLightfv(GL_LIGHT0,GL_POSITION,lPosition);}
+			if (lightNum == 1) {lposition2[2]++; glLightfv(GL_LIGHT1,GL_POSITION,lposition2);}
+			if (lightNum == 2) {lposition3[2]++; glLightfv(GL_LIGHT2,GL_POSITION,lposition3);}
+			if (lightNum == 3) {lposition4[2]++; glLightfv(GL_LIGHT3,GL_POSITION,lposition4);}
+			if (lightNum == 4) {lposition5[2]++; glLightfv(GL_LIGHT4,GL_POSITION,lposition5);}
+		}
 	}
 	if(key == 'w') {
-		if (transform == 0) objList[currentObj]->translate(0,0,-.1);
-		if (transform == 1) objList[currentObj]->scale(0,0,-.1);
-		if (transform == 2) {objList[currentObj]->rotateAxis = 2; objList[currentObj]->rotate(-0.5);}
+		if (moveToggle) {
+			if (transform == 0) objList[currentObj]->translate(0,0,-.1);
+			if (transform == 1) objList[currentObj]->scale(0,0,-.1);
+			if (transform == 2) {objList[currentObj]->rotateAxis = 2; objList[currentObj]->rotate(-0.5);}
+		} else {
+			if (lightNum == 0) {lPosition[2]--; glLightfv(GL_LIGHT0,GL_POSITION,lPosition);}
+			if (lightNum == 1) {lposition2[2]--; glLightfv(GL_LIGHT1,GL_POSITION,lposition2);}
+			if (lightNum == 2) {lposition3[2]--; glLightfv(GL_LIGHT2,GL_POSITION,lposition3);}
+			if (lightNum == 3) {lposition4[2]--; glLightfv(GL_LIGHT3,GL_POSITION,lposition4);}
+			if (lightNum == 4) {lposition5[2]--; glLightfv(GL_LIGHT4,GL_POSITION,lposition5);}
+		}
 	}
 	if(key == 'e') {
-		if (transform == 0) objList[currentObj]->translate(0,.1,0);
-		if (transform == 1) objList[currentObj]->scale(0,.1,0);
-		if (transform == 2) {objList[currentObj]->rotateAxis = 1; objList[currentObj]->rotate(0.5);}
+		if (moveToggle) {
+			if (transform == 0) objList[currentObj]->translate(0,.1,0);
+			if (transform == 1) objList[currentObj]->scale(0,.1,0);
+			if (transform == 2) {objList[currentObj]->rotateAxis = 1; objList[currentObj]->rotate(0.5);}
+		} else {
+			if (lightNum == 0) {lPosition[1]--; glLightfv(GL_LIGHT0,GL_POSITION,lPosition);}
+			if (lightNum == 1) {lposition2[1]--; glLightfv(GL_LIGHT1,GL_POSITION,lposition2);}
+			if (lightNum == 2) {lposition3[1]--; glLightfv(GL_LIGHT2,GL_POSITION,lposition3);}
+			if (lightNum == 3) {lposition4[1]--; glLightfv(GL_LIGHT3,GL_POSITION,lposition4);}
+			if (lightNum == 4) {lposition5[1]--; glLightfv(GL_LIGHT4,GL_POSITION,lposition5);}
+		}
 	}
 	if(key == 'q') {
-		if (transform == 0) objList[currentObj]->translate(0,-.1,0);
-		if (transform == 1) objList[currentObj]->scale(0,-.1,0);
-		if (transform == 2) {objList[currentObj]->rotateAxis = 1; objList[currentObj]->rotate(-0.5);}
+		if (moveToggle) {
+			if (transform == 0) objList[currentObj]->translate(0,-.1,0);
+			if (transform == 1) objList[currentObj]->scale(0,-.1,0);
+			if (transform == 2) {objList[currentObj]->rotateAxis = 1; objList[currentObj]->rotate(-0.5);}
+		} else {
+			if (lightNum == 0) {lPosition[1]--; glLightfv(GL_LIGHT0,GL_POSITION,lPosition);}
+			if (lightNum == 1) {lposition2[1]--; glLightfv(GL_LIGHT1,GL_POSITION,lposition2);}
+			if (lightNum == 2) {lposition3[1]--; glLightfv(GL_LIGHT2,GL_POSITION,lposition3);}
+			if (lightNum == 3) {lposition4[1]--; glLightfv(GL_LIGHT3,GL_POSITION,lposition4);}
+			if (lightNum == 4) {lposition5[1]--; glLightfv(GL_LIGHT4,GL_POSITION,lposition5);}
+		}
 	}
 		
 	if(key == 'o')
